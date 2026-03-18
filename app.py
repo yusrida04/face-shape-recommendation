@@ -13,7 +13,7 @@ import io
 # ============================================================
 # SETTING
 # ============================================================
-MODEL_PATH = "best_faceshape_MobileNetV2.keras"
+MODEL_PATH = "best_faceshape_MobileNetV2_FINAL.keras"
 HAIR_PATH  = "Rambut_Labeled"
 HIJAB_PATH = "Hijab_Labeled"
 
