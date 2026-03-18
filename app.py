@@ -88,6 +88,8 @@ p, span, label, div { color: #2D2D2D; }
     font-size:1rem; color:rgba(255,255,255,0.88) !important;
     font-weight:400; max-width:500px;
     margin:0 auto; line-height:1.65;
+    text-align:center !important;
+    display:block !important;
 }
 
 /* ---- STEP CARD ---- */
