@@ -506,7 +506,9 @@ st.markdown("""
 <div class="hero">
     <div class="hero-badge">AI Beauty Advisor</div>
     <h1 class="hero-title">FaceStyle AI</h1>
-    <p class="hero-sub">
+    <p style="font-size:1rem;color:rgba(255,255,255,0.88);font-weight:400;
+              max-width:500px;margin:0 auto;line-height:1.65;
+              text-align:center;display:block;width:100%;">
         Deteksi bentuk wajahmu dan dapatkan rekomendasi
         gaya rambut &amp; hijab yang paling cocok untukmu
     </p>
