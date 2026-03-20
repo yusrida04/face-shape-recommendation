@@ -189,7 +189,7 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     font-weight:700 !important; padding:6px 20px !important;
 }
 
-/* ---- CAMERA — override semua elemen hitam/merah ---- */
+/* ---- CAMERA ---- */
 [data-testid="stCameraInput"] {
     background: transparent !important;
 }
@@ -198,7 +198,6 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     font-weight: 700 !important;
     font-size: 0.9rem !important;
 }
-/* Box container kamera */
 [data-testid="stCameraInput"] section,
 [data-testid="stCameraInput"] > div {
     background: #F0EEFF !important;
@@ -207,19 +206,16 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     overflow: hidden !important;
     padding: 0 !important;
 }
-/* Video live */
 [data-testid="stCameraInput"] video {
     border-radius: 18px !important;
     width: 100% !important;
     transform: scaleX(-1) !important;
 }
-/* Foto hasil tangkap */
 [data-testid="stCameraInput"] img {
     border-radius: 18px !important;
     width: 100% !important;
     transform: scaleX(-1) !important;
 }
-/* Tombol Take Photo — ganti merah jadi ungu */
 [data-testid="stCameraInput"] button,
 [data-testid="stCameraInput"] [data-testid="cameraCaptureButton"],
 [data-testid="stCameraInput"] [kind="secondary"] {
@@ -240,7 +236,6 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     transform: translateY(-1px) !important;
     box-shadow: 0 6px 20px rgba(91,79,207,0.45) !important;
 }
-/* Sembunyikan icon kamera bawaan yang aneh */
 [data-testid="stCameraInput"] svg { display: none !important; }
 
 /* ---- CHECKBOX ---- */
@@ -348,7 +343,6 @@ img { border-radius:12px !important; }
 <script>
 (function(){
     function fix(){
-        /* Dropdown fix */
         document.querySelectorAll('[data-baseweb="popover"],[role="listbox"]').forEach(function(el){
             el.style.setProperty('background','#FFFFFF','important');
             el.style.setProperty('border','2px solid #D8D0F5','important');
@@ -358,7 +352,6 @@ img { border-radius:12px !important; }
             el.style.setProperty('background','#FFFFFF','important');
             el.style.setProperty('color','#2D2D2D','important');
         });
-        /* Camera button fix — ganti merah ke ungu via JS sebagai backup CSS */
         document.querySelectorAll(
             '[data-testid="stCameraInput"] button'
         ).forEach(function(btn){
@@ -371,7 +364,6 @@ img { border-radius:12px !important; }
             btn.style.setProperty('width','100%','important');
             btn.style.setProperty('box-shadow','0 4px 16px rgba(91,79,207,0.3)','important');
         });
-        /* File uploader bg fix */
         document.querySelectorAll(
             '[data-testid="stFileUploader"] section *:not(button)'
         ).forEach(function(el){
@@ -445,8 +437,13 @@ def detect_face_shape(image_array: np.ndarray):
     x1, x2 = max(0, x-pw), min(img.shape[1], x+w+pw)
     face    = cv2.resize(img[y1:y2, x1:x2], (224, 224))
     face    = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
+
+    # ✅ FIX: Gunakan float32 tanpa preprocess_input
+    # (sama persis dengan kode Colab agar konsisten dengan cara model dilatih)
     face_arr = np.array(face, dtype=np.float32)
-    face_arr = tf.keras.applications.mobilenet_v2.preprocess_input(face_arr)
+    # BARIS INI DIHAPUS — inilah penyebab bug "selalu Oblong":
+    # face_arr = tf.keras.applications.mobilenet_v2.preprocess_input(face_arr)
+
     tensor   = tf.expand_dims(face_arr, 0)
     preds    = model.predict(tensor, verbose=0)
     return class_names[int(np.argmax(preds))], float(np.max(preds))
@@ -640,7 +637,7 @@ with st.container(border=True):
     """, unsafe_allow_html=True)
 
 # ============================================================
-# STEP 3 — HASIL (hanya muncul setelah tombol ditekan)
+# STEP 3 — HASIL
 # ============================================================
 if st.session_state.show_result and st.session_state.image_array is not None:
 
@@ -668,7 +665,6 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                 st.session_state.image_array = None
                 st.rerun()
         else:
-            # Face result banner
             st.markdown(f"""
             <div class="face-banner">
                 <div>
