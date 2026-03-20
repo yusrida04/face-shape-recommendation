@@ -630,11 +630,14 @@ with st.container(border=True):
             )
 
     if mode == "Hijab":
+        st.markdown("<div style='height:0.3rem'></div>", unsafe_allow_html=True)
         st.markdown("**Jenis Hijab yang Kamu Pakai Sekarang**")
-        hijab_type = st.selectbox(
-            "jenis_hijab", ["instant", "pashmina", "segi_empat"],
-            label_visibility="collapsed",
-            format_func=lambda x: hijab_labels.get(x, x)
+        hijab_type = st.radio(
+            "jenis_hijab",
+            ["instant", "pashmina", "segi_empat"],
+            format_func=lambda x: hijab_labels.get(x, x),
+            horizontal=True,
+            label_visibility="collapsed"
         )
 
     st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
