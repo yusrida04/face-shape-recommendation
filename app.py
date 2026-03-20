@@ -570,7 +570,7 @@ def render_poni_section(face_shape):
 # ============================================================
 # SESSION STATE
 # ============================================================
-for k, v in [('history', []), ('show_result', False), ('image_array', None)]:
+for k, v in [('history', []), ('show_result', False), ('image_array', None), ('active_mode', None)]:
     if k not in st.session_state:
         st.session_state[k] = v
 
@@ -606,6 +606,13 @@ with st.container(border=True):
 
     mode = st.radio("mode", ["Rambut", "Hijab"],
                     horizontal=True, label_visibility="collapsed")
+
+    # Reset foto & hasil setiap kali mode berganti
+    if st.session_state.active_mode != mode:
+        st.session_state.active_mode  = mode
+        st.session_state.image_array  = None
+        st.session_state.show_result  = False
+        st.rerun()
 
     if mode == "Rambut":
         st.markdown("<div style='height:0.3rem'></div>", unsafe_allow_html=True)
