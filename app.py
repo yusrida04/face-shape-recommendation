@@ -14,7 +14,7 @@ import io
 # SETTING
 # ============================================================
 MODEL_PATH = "best_faceshape_MobileNetV2_FINAL.keras"
-HAIR_PATH  = "Rambut_Labeled_V2"   # ← folder baru hasil distribute_labeled.py
+HAIR_PATH  = "Rambut_Labeled_V2"
 HIJAB_PATH = "Hijab_Labeled"
 
 st.set_page_config(
@@ -210,11 +210,6 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
 .stSuccess > div { background:#EDFFF8 !important; color:#00695C !important; border-radius:14px !important; border:none !important; }
 .stError > div   { background:#FFF2F2 !important; border-radius:14px !important; border:none !important; }
 
-.photo-label { text-align:center; margin-top:0.6rem; }
-.label-name  { font-size:0.82rem; font-weight:700; color:#1A1035 !important; text-transform:uppercase; letter-spacing:0.6px; }
-.badge-rec { display:inline-block; background:linear-gradient(135deg,#00B894,#55EFC4); color:#fff !important; font-size:0.68rem; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:4px; }
-.badge-no  { display:inline-block; background:#F0F0F0; color:#999 !important; font-size:0.68rem; font-weight:600; padding:2px 10px; border-radius:20px; margin-top:4px; }
-
 .face-banner {
     background:linear-gradient(135deg,#5B4FCF 0%,#8B7FF5 100%);
     border-radius:18px; padding:1.3rem 1.8rem; margin-bottom:1.5rem;
@@ -300,7 +295,6 @@ face_shape_desc = {
     'Oblong': 'Panjang melebihi lebar',
 }
 
-# Panjang yang direkomendasikan per bentuk wajah
 length_rules = {
     'Heart':  ['panjang'],
     'Oval':   ['panjang', 'semi', 'pendek'],
@@ -309,7 +303,6 @@ length_rules = {
     'Oblong': ['pendek', 'semi'],
 }
 
-# Label tampilan nama style
 style_labels = {
     'curly':    'Curly',
     'layer':    'Layer',
@@ -318,47 +311,45 @@ style_labels = {
     'wolfcut':  'Wolf Cut',
 }
 
-# Aturan poni per bentuk wajah
-# Format: {shape: [(jenis_poni, deskripsi_singkat, cocok: True/False), ...]}
+# Aturan poni: (nama, deskripsi, cocok)
 poni_rules = {
     'Heart': [
-        ('Curtain Bangs',    'Poni belah tengah menyamping',      True),
-        ('Wispy Bangs',      'Poni tipis ringan',                  True),
-        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',       True),
-        ('Straight Blunt',   'Poni lurus tebal penuh',             False),
-        ('Baby Bangs',       'Poni super pendek di atas alis',     False),
+        ('Curtain Bangs',    'Poni belah tengah menyamping',   True),
+        ('Wispy Bangs',      'Poni tipis ringan',               True),
+        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',    True),
+        ('Straight Blunt',   'Poni lurus tebal penuh',          False),
+        ('Baby Bangs',       'Poni super pendek di atas alis',  False),
     ],
     'Oval': [
-        ('Curtain Bangs',    'Poni belah tengah menyamping',      True),
-        ('Straight Blunt',   'Poni lurus tebal penuh',             True),
-        ('Wispy Bangs',      'Poni tipis ringan',                  True),
-        ('Baby Bangs',       'Poni super pendek di atas alis',     True),
-        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',       True),
+        ('Curtain Bangs',    'Poni belah tengah menyamping',   True),
+        ('Straight Blunt',   'Poni lurus tebal penuh',          True),
+        ('Wispy Bangs',      'Poni tipis ringan',               True),
+        ('Baby Bangs',       'Poni super pendek di atas alis',  True),
+        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',    True),
     ],
     'Round': [
-        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',       True),
-        ('Curtain Bangs',    'Poni belah tengah menyamping',       True),
-        ('Wispy Bangs',      'Poni tipis ringan',                  True),
-        ('Straight Blunt',   'Poni lurus tebal penuh',             False),
-        ('Baby Bangs',       'Poni super pendek di atas alis',     False),
+        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',    True),
+        ('Curtain Bangs',    'Poni belah tengah menyamping',    True),
+        ('Wispy Bangs',      'Poni tipis ringan',               True),
+        ('Straight Blunt',   'Poni lurus tebal penuh',          False),
+        ('Baby Bangs',       'Poni super pendek di atas alis',  False),
     ],
     'Square': [
-        ('Curtain Bangs',    'Poni belah tengah menyamping',      True),
-        ('Wispy Bangs',      'Poni tipis ringan',                  True),
-        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',       True),
-        ('Straight Blunt',   'Poni lurus tebal penuh',             False),
-        ('Baby Bangs',       'Poni super pendek di atas alis',     False),
+        ('Curtain Bangs',    'Poni belah tengah menyamping',   True),
+        ('Wispy Bangs',      'Poni tipis ringan',               True),
+        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',    True),
+        ('Straight Blunt',   'Poni lurus tebal penuh',          False),
+        ('Baby Bangs',       'Poni super pendek di atas alis',  False),
     ],
     'Oblong': [
-        ('Straight Blunt',   'Poni lurus tebal penuh',             True),
-        ('Wispy Bangs',      'Poni tipis ringan',                  True),
-        ('Baby Bangs',       'Poni super pendek di atas alis',     True),
-        ('Curtain Bangs',    'Poni belah tengah menyamping',       False),
-        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',       False),
+        ('Straight Blunt',   'Poni lurus tebal penuh',          True),
+        ('Wispy Bangs',      'Poni tipis ringan',               True),
+        ('Baby Bangs',       'Poni super pendek di atas alis',  True),
+        ('Curtain Bangs',    'Poni belah tengah menyamping',    False),
+        ('Side-Swept Bangs', 'Poni menyamping ke satu sisi',    False),
     ],
 }
 
-# Hijab
 hijab_rules = {
     'Oval':   ['segi_empat', 'pashmina', 'instant'],
     'Round':  ['pashmina', 'segi_empat'],
@@ -385,8 +376,7 @@ def detect_face_shape(image_array: np.ndarray):
     x1, x2 = max(0, x-pw), min(img.shape[1], x+w+pw)
     face    = cv2.resize(img[y1:y2, x1:x2], (224, 224))
     face    = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
-
-    # ✅ float32 tanpa preprocess_input — konsisten dengan cara model dilatih
+    # ✅ float32 tanpa preprocess_input
     face_arr = np.array(face, dtype=np.float32)
     tensor   = tf.expand_dims(face_arr, 0)
     preds    = model.predict(tensor, verbose=0)
@@ -397,47 +387,28 @@ def get_photos(folder_path):
     p = Path(folder_path)
     if not p.exists():
         return []
-    return (
-        list(p.glob('*.jpg')) +
-        list(p.glob('*.jpeg')) +
-        list(p.glob('*.png'))
-    )
+    return list(p.glob('*.jpg')) + list(p.glob('*.jpeg')) + list(p.glob('*.png'))
 
 
 def get_top3_styles(face_shape: str):
-    """
-    Scan semua folder {face_shape}_{length}_{style} di HAIR_PATH.
-    Kembalikan 3 folder terbaik berdasarkan:
-      1. Panjang termasuk dalam length_rules (prioritas utama)
-      2. Jumlah foto terbanyak (tiebreaker)
-
-    Struktur folder baru: Oval_panjang_layer, Round_semi_wavy, dst.
-    Format: {Shape}_{length}_{style}
-    """
-    base     = Path(HAIR_PATH)
-    rec_lens = length_rules.get(face_shape, [])
+    """Scan folder {Shape}_{length}_{style}, kembalikan 3 terbaik."""
+    base       = Path(HAIR_PATH)
+    rec_lens   = length_rules.get(face_shape, [])
     candidates = []
-
     if not base.exists():
         return []
-
     for folder in base.iterdir():
         if not folder.is_dir():
             continue
-
-        # Nama folder: Shape_length_style  → split maxsplit=2
         parts = folder.name.split('_', 2)
         if len(parts) != 3:
             continue
-
         shape, length, style = parts
         if shape != face_shape:
             continue
-
         photos = get_photos(folder)
         if not photos:
             continue
-
         candidates.append({
             'folder':      folder,
             'length':      length,
@@ -446,16 +417,14 @@ def get_top3_styles(face_shape: str):
             'is_rec':      length in rec_lens,
             'photo_count': len(photos),
         })
-
-    # Recommended dulu, lalu jumlah foto terbanyak
     candidates.sort(key=lambda x: (not x['is_rec'], -x['photo_count']))
     return candidates[:3]
 
 
 def save_to_database(image_array, face_shape, sub_type, mode):
     """
-    mode=rambut: sub_type=(length_user, style_user) simpan ke folder sesuai pilihan user
-    mode=hijab:  sub_type=hijab_type string
+    mode='rambut': sub_type=(length_user, style_user)
+    mode='hijab':  sub_type=hijab_type string
     """
     ts = int(time.time())
     if mode == 'hijab':
@@ -468,31 +437,69 @@ def save_to_database(image_array, face_shape, sub_type, mode):
     cv2.imwrite(str(folder / f"user_{ts}.jpg"), bgr)
 
 
-def create_result_image_top3(top3_items, face_shape):
-    n    = len(top3_items)
+def render_top3_cards(items, rank_colors, label_fn, is_rec_fn):
+    """
+    Render 3 kolom kartu ranking.
+    label_fn(item) → string nama tampilan
+    is_rec_fn(item) → bool
+    """
+    cols = st.columns(3)
+    for i, (col, item) in enumerate(zip(cols, items)):
+        photos = item['photos']
+        photo  = random.choice(photos)
+        label  = label_fn(item)
+        is_rec = is_rec_fn(item)
+        rec_tag = (
+            "<span style='display:inline-block;"
+            "background:linear-gradient(135deg,#00B894,#55EFC4);"
+            "color:#fff;font-size:0.65rem;font-weight:700;"
+            "padding:2px 9px;border-radius:20px;margin-top:5px'>"
+            "✓ Direkomendasikan</span>"
+        ) if is_rec else (
+            "<span style='display:inline-block;"
+            "background:#F0F0F0;color:#999;"
+            "font-size:0.65rem;font-weight:600;"
+            "padding:2px 9px;border-radius:20px;margin-top:5px'>"
+            "Kurang cocok</span>"
+        )
+        with col:
+            st.image(Image.open(str(photo)), use_column_width=True)
+            st.markdown(f"""
+            <div style='text-align:center;padding:0.5rem 0 0.8rem'>
+                <span style='display:inline-block;
+                    background:{rank_colors[i]};color:#fff;
+                    font-size:0.7rem;font-weight:800;
+                    padding:2px 12px;border-radius:20px;
+                    margin-bottom:6px'>#{i+1}</span><br>
+                <span style='font-size:1rem;font-weight:800;
+                    color:#1A1035'>{label}</span><br>
+                {rec_tag}
+            </div>
+            """, unsafe_allow_html=True)
+    return cols
+
+
+def create_download_image(items, title, label_fn, is_rec_fn):
+    """Buat gambar matplotlib untuk download."""
+    n    = len(items)
     fig, axes = plt.subplots(1, n, figsize=(5 * n, 5))
     if n == 1:
         axes = [axes]
     fig.patch.set_facecolor('#F7F5FF')
-
-    for i, (ax, item) in enumerate(zip(axes, top3_items)):
+    for i, (ax, item) in enumerate(zip(axes, items)):
         photo = random.choice(item['photos'])
         ax.imshow(mpimg.imread(str(photo)))
         ax.axis('off')
-        style_txt  = style_labels.get(item['style'], item['style'])
-        len_txt    = item['length'].capitalize()
-        combo_txt  = f"{len_txt} {style_txt}"
-        color      = '#5B4FCF' if item['is_rec'] else '#AAAAAA'
-        suffix     = " ✓" if item['is_rec'] else ""
+        label  = label_fn(item)
+        is_rec = is_rec_fn(item)
+        suffix = " ✓" if is_rec else ""
         ax.set_title(
-            f"#{i+1}  {combo_txt}{suffix}",
-            fontsize=11, pad=8, color=color, fontweight='bold'
+            f"#{i+1}  {label}{suffix}",
+            fontsize=11, pad=8,
+            color='#5B4FCF' if is_rec else '#AAAAAA',
+            fontweight='bold' if is_rec else 'normal'
         )
-
-    plt.suptitle(
-        f"Top 3 Rekomendasi Rambut — Wajah {face_shape}",
-        fontsize=13, fontweight='bold', color='#4A3B8B', y=1.03
-    )
+    plt.suptitle(title, fontsize=13, fontweight='bold', color='#4A3B8B', y=1.03)
     plt.tight_layout()
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=150, bbox_inches='tight',
@@ -500,6 +507,65 @@ def create_result_image_top3(top3_items, face_shape):
     buf.seek(0)
     plt.close()
     return buf
+
+
+def render_poni_section(face_shape):
+    """Render section rekomendasi poni."""
+    st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    st.markdown(
+        "<p style='font-size:0.85rem;font-weight:700;"
+        "color:#8882B0;margin:0 0 0.8rem'>✂️ Rekomendasi Poni untuk Wajahmu</p>",
+        unsafe_allow_html=True
+    )
+    poni_list = poni_rules.get(face_shape, [])
+    rec_poni  = [p for p in poni_list if p[2]]
+    not_poni  = [p for p in poni_list if not p[2]]
+
+    poni_rec_html = "".join([
+        f"""<div style='display:flex;align-items:flex-start;gap:10px;
+                margin-bottom:10px;background:#EDFFF8;
+                border:1px solid #B2EFD8;border-radius:14px;
+                padding:10px 14px'>
+            <span style='font-size:1.1rem;margin-top:1px'>✅</span>
+            <div>
+                <span style='font-size:0.88rem;font-weight:800;
+                    color:#00695C'>{p[0]}</span><br>
+                <span style='font-size:0.75rem;color:#4A9E7A'>{p[1]}</span>
+            </div>
+        </div>"""
+        for p in rec_poni
+    ])
+    poni_no_html = "".join([
+        f"""<div style='display:flex;align-items:flex-start;gap:10px;
+                margin-bottom:10px;background:#FFF5F5;
+                border:1px solid #FFCDD2;border-radius:14px;
+                padding:10px 14px'>
+            <span style='font-size:1.1rem;margin-top:1px'>❌</span>
+            <div>
+                <span style='font-size:0.88rem;font-weight:800;
+                    color:#C62828'>{p[0]}</span><br>
+                <span style='font-size:0.75rem;color:#E57373'>{p[1]}</span>
+            </div>
+        </div>"""
+        for p in not_poni
+    ])
+
+    pc1, pc2 = st.columns(2)
+    with pc1:
+        st.markdown(
+            "<p style='font-size:0.78rem;font-weight:700;"
+            "color:#00695C;margin-bottom:6px'>Poni yang Cocok</p>",
+            unsafe_allow_html=True
+        )
+        st.markdown(poni_rec_html, unsafe_allow_html=True)
+    with pc2:
+        st.markdown(
+            "<p style='font-size:0.78rem;font-weight:700;"
+            "color:#C62828;margin-bottom:6px'>Poni yang Kurang Cocok</p>",
+            unsafe_allow_html=True
+        )
+        st.markdown(poni_no_html, unsafe_allow_html=True)
+
 
 # ============================================================
 # SESSION STATE
@@ -525,14 +591,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ============================================================
-# STEP 1 — MODE
+# STEP 1 — MODE & PREFERENSI
 # ============================================================
 with st.container(border=True):
     st.markdown("""
     <div class="step-header">
         <div class="step-num">1</div>
         <div>
-            <div class="step-title">Pilih Mode</div>
+            <div class="step-title">Pilih Mode &amp; Preferensi</div>
             <div class="step-desc">Pilih rekomendasi rambut atau hijab</div>
         </div>
     </div>
@@ -564,7 +630,7 @@ with st.container(border=True):
             )
 
     if mode == "Hijab":
-        st.markdown("**Jenis Hijab yang kamu pakai saat ini**")
+        st.markdown("**Jenis Hijab yang Kamu Pakai Sekarang**")
         hijab_type = st.selectbox(
             "jenis_hijab", ["instant", "pashmina", "segi_empat"],
             label_visibility="collapsed",
@@ -678,6 +744,8 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                 st.rerun()
 
         else:
+            rank_colors = ["#5B4FCF", "#8B7FF5", "#B8AFFF"]
+
             # Banner bentuk wajah
             st.markdown(f"""
             <div class="face-banner">
@@ -689,9 +757,9 @@ if st.session_state.show_result and st.session_state.image_array is not None:
             </div>
             """, unsafe_allow_html=True)
 
-            # ==================================================
-            # MODE RAMBUT — Top 3 kartu
-            # ==================================================
+            # ================================================
+            # MODE RAMBUT
+            # ================================================
             if mode == "Rambut":
                 top3 = get_top3_styles(face_shape)
 
@@ -700,8 +768,9 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                 else:
                     rec_lens = length_rules.get(face_shape, [])
                     st.info(
-                        f"Bentuk wajah **{face_shape}** cocok dengan panjang rambut: "
-                        f"**{', '.join(rec_lens)}**"
+                        f"Bentuk wajah **{face_shape}** cocok dengan panjang: "
+                        f"**{', '.join([l.capitalize() for l in rec_lens])}**  |  "
+                        f"Rambutmu sekarang: **{length_user.capitalize()} {style_labels.get(hair_type_user, hair_type_user)}**"
                     )
 
                     st.markdown(
@@ -710,23 +779,25 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                         unsafe_allow_html=True
                     )
 
+                    # Render kartu Top 3
                     cols = st.columns(3)
-                    rank_colors = ["#5B4FCF", "#8B7FF5", "#B8AFFF"]
-
                     for i, (col, item) in enumerate(zip(cols, top3)):
                         photo      = random.choice(item['photos'])
-                        style_name = style_labels.get(item['style'], item['style'])
-                        length_cap = item['length'].capitalize()
-                        # Label kombinasi: "Panjang Layer", "Semi Wavy", dst.
-                        combo_name = f"{length_cap} {style_name}"
+                        combo_name = f"{item['length'].capitalize()} {style_labels.get(item['style'], item['style'])}"
+                        is_rec     = item['is_rec']
                         rec_tag    = (
                             "<span style='display:inline-block;"
                             "background:linear-gradient(135deg,#00B894,#55EFC4);"
                             "color:#fff;font-size:0.65rem;font-weight:700;"
                             "padding:2px 9px;border-radius:20px;margin-top:5px'>"
                             "✓ Direkomendasikan</span>"
-                        ) if item['is_rec'] else ""
-
+                        ) if is_rec else (
+                            "<span style='display:inline-block;"
+                            "background:#F0F0F0;color:#999;"
+                            "font-size:0.65rem;font-weight:600;"
+                            "padding:2px 9px;border-radius:20px;margin-top:5px'>"
+                            "Kurang cocok</span>"
+                        )
                         with col:
                             st.image(Image.open(str(photo)), use_column_width=True)
                             st.markdown(f"""
@@ -750,11 +821,16 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                     dl_col, retry_col = st.columns(2)
 
                     with dl_col:
-                        buf = create_result_image_top3(top3, face_shape)
+                        buf = create_download_image(
+                            top3,
+                            f"Top 3 Rambut — Wajah {face_shape}",
+                            label_fn  = lambda x: f"{x['length'].capitalize()} {style_labels.get(x['style'], x['style'])}",
+                            is_rec_fn = lambda x: x['is_rec']
+                        )
                         st.download_button(
                             "⬇️ Download Hasil",
                             data=buf,
-                            file_name=f"facestyle_{face_shape}_top3.png",
+                            file_name=f"facestyle_{face_shape}_rambut_top3.png",
                             mime="image/png",
                             use_container_width=True
                         )
@@ -764,7 +840,9 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                             st.session_state.image_array = None
                             st.rerun()
 
-                    st.session_state.history.append(f"Rambut {face_shape}")
+                    st.session_state.history.append(
+                        f"Rambut {face_shape} — {length_user.capitalize()} {style_labels.get(hair_type_user, hair_type_user)}"
+                    )
                     if consent:
                         save_to_database(
                             st.session_state.image_array,
@@ -773,149 +851,135 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                             'rambut'
                         )
                         st.success(
-                            f"Foto disimpan ke folder **{face_shape}_{length_user}_{hair_type_user}**. "
+                            f"Foto disimpan ke **{face_shape}_{length_user}_{hair_type_user}**. "
                             "Terima kasih atas kontribusinya!"
                         )
 
-                    # ---- REKOMENDASI PONI ----
-                    st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-                    st.markdown(
-                        "<p style='font-size:0.85rem;font-weight:700;"
-                        "color:#8882B0;margin:0 0 0.8rem'>✂️ Rekomendasi Poni untuk Wajahmu</p>",
-                        unsafe_allow_html=True
-                    )
+                    # Rekomendasi Poni
+                    render_poni_section(face_shape)
 
-                    poni_list = poni_rules.get(face_shape, [])
-                    rec_poni  = [p for p in poni_list if p[2]]
-                    not_poni  = [p for p in poni_list if not p[2]]
-
-                    # Cocok
-                    poni_rec_html = "".join([
-                        f"""<div style='display:flex;align-items:flex-start;gap:10px;
-                                margin-bottom:10px;background:#EDFFF8;
-                                border:1px solid #B2EFD8;border-radius:14px;
-                                padding:10px 14px'>
-                            <span style='font-size:1.1rem;margin-top:1px'>✅</span>
-                            <div>
-                                <span style='font-size:0.88rem;font-weight:800;
-                                    color:#00695C'>{p[0]}</span><br>
-                                <span style='font-size:0.75rem;color:#4A9E7A'>{p[1]}</span>
-                            </div>
-                        </div>"""
-                        for p in rec_poni
-                    ])
-
-                    # Tidak cocok
-                    poni_no_html = "".join([
-                        f"""<div style='display:flex;align-items:flex-start;gap:10px;
-                                margin-bottom:10px;background:#FFF5F5;
-                                border:1px solid #FFCDD2;border-radius:14px;
-                                padding:10px 14px'>
-                            <span style='font-size:1.1rem;margin-top:1px'>❌</span>
-                            <div>
-                                <span style='font-size:0.88rem;font-weight:800;
-                                    color:#C62828'>{p[0]}</span><br>
-                                <span style='font-size:0.75rem;color:#E57373'>{p[1]}</span>
-                            </div>
-                        </div>"""
-                        for p in not_poni
-                    ])
-
-                    pc1, pc2 = st.columns(2)
-                    with pc1:
-                        st.markdown(
-                            "<p style='font-size:0.78rem;font-weight:700;"
-                            "color:#00695C;margin-bottom:6px'>Poni yang Cocok</p>",
-                            unsafe_allow_html=True
-                        )
-                        st.markdown(poni_rec_html, unsafe_allow_html=True)
-                    with pc2:
-                        st.markdown(
-                            "<p style='font-size:0.78rem;font-weight:700;"
-                            "color:#C62828;margin-bottom:6px'>Poni yang Kurang Cocok</p>",
-                            unsafe_allow_html=True
-                        )
-                        st.markdown(poni_no_html, unsafe_allow_html=True)
-
-            # ==================================================
-            # MODE HIJAB
-            # ==================================================
+            # ================================================
+            # MODE HIJAB — Top 3 ranking cards
+            # ================================================
             else:
-                rec_hijab = hijab_rules[face_shape]
-                all_hijab = ['instant', 'pashmina', 'segi_empat']
+                rec_hijab  = hijab_rules[face_shape]
+                all_hijab  = ['instant', 'pashmina', 'segi_empat']
 
-                st.info(
-                    f"Jenis hijab: **{hijab_labels.get(hijab_type, hijab_type)}**  |  "
-                    f"Cocok untuk: **{', '.join([hijab_labels.get(h, h) for h in rec_hijab])}**"
+                # Urutkan: recommended dulu, lalu urutan default
+                hijab_sorted = sorted(
+                    all_hijab,
+                    key=lambda h: (h not in rec_hijab, all_hijab.index(h))
                 )
 
-                cols3 = st.columns(3)
-                photos_shown, labels_shown = [], []
+                st.info(
+                    f"Hijabmu sekarang: **{hijab_labels.get(hijab_type, hijab_type)}**  |  "
+                    f"Cocok untuk wajah **{face_shape}**: "
+                    f"**{', '.join([hijab_labels.get(h, h) for h in rec_hijab])}**"
+                )
 
-                for col, htype in zip(cols3, all_hijab):
+                st.markdown(
+                    "<p style='font-size:0.85rem;font-weight:700;"
+                    "color:#8882B0;margin:0.2rem 0 0.8rem'>🏆 Top 3 Rekomendasi Hijab Untukmu</p>",
+                    unsafe_allow_html=True
+                )
+
+                # Bangun list item seperti top3 rambut
+                hijab_items = []
+                for htype in hijab_sorted:
                     folder = Path(HIJAB_PATH) / f"{face_shape}_{htype}"
                     photos = get_photos(folder)
-                    is_rec = htype in rec_hijab
+                    hijab_items.append({
+                        'htype':  htype,
+                        'photos': photos,
+                        'is_rec': htype in rec_hijab,
+                        'label':  hijab_labels.get(htype, htype),
+                    })
 
+                # Render 3 kartu
+                cols = st.columns(3)
+                for i, (col, item) in enumerate(zip(cols, hijab_items)):
+                    is_rec = item['is_rec']
+                    label  = item['label']
+                    rec_tag = (
+                        "<span style='display:inline-block;"
+                        "background:linear-gradient(135deg,#00B894,#55EFC4);"
+                        "color:#fff;font-size:0.65rem;font-weight:700;"
+                        "padding:2px 9px;border-radius:20px;margin-top:5px'>"
+                        "✓ Direkomendasikan</span>"
+                    ) if is_rec else (
+                        "<span style='display:inline-block;"
+                        "background:#F0F0F0;color:#999;"
+                        "font-size:0.65rem;font-weight:600;"
+                        "padding:2px 9px;border-radius:20px;margin-top:5px'>"
+                        "Kurang cocok</span>"
+                    )
                     with col:
-                        if photos:
-                            photo = random.choice(photos)
+                        if item['photos']:
+                            photo = random.choice(item['photos'])
                             st.image(Image.open(str(photo)), use_column_width=True)
-                            photos_shown.append(photo)
                         else:
                             st.markdown(
                                 "<div style='background:#F0EEFF;border-radius:12px;"
-                                "height:150px;display:flex;align-items:center;"
+                                "height:160px;display:flex;align-items:center;"
                                 "justify-content:center'><p style='color:#B8AFFF;"
                                 "font-size:0.78rem;text-align:center;margin:0'>"
                                 "Foto belum<br>tersedia</p></div>",
                                 unsafe_allow_html=True
                             )
-                            photos_shown.append(None)
-
-                        badge     = "badge-rec" if is_rec else "badge-no"
-                        badge_txt = "Direkomendasikan" if is_rec else "Kurang cocok"
                         st.markdown(f"""
-                        <div class='photo-label'>
-                            <span class='label-name'>{hijab_labels.get(htype, htype)}</span><br>
-                            <span class='{badge}'>{badge_txt}</span>
-                        </div>""", unsafe_allow_html=True)
-                        labels_shown.append(f"{hijab_labels.get(htype, htype)} - {badge_txt}")
+                        <div style='text-align:center;padding:0.5rem 0 0.8rem'>
+                            <span style='display:inline-block;
+                                background:{rank_colors[i]};color:#fff;
+                                font-size:0.7rem;font-weight:800;
+                                padding:2px 12px;border-radius:20px;
+                                margin-bottom:6px'>#{i+1}</span><br>
+                            <span style='font-size:1rem;font-weight:800;
+                                color:#1A1035'>{label}</span><br>
+                            {rec_tag}
+                        </div>
+                        """, unsafe_allow_html=True)
 
                 st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
                 dl_col, retry_col = st.columns(2)
 
                 with dl_col:
-                    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-                    fig.patch.set_facecolor('#F7F5FF')
-                    for ax, photo, label in zip(axes, photos_shown, labels_shown):
-                        if photo:
+                    # Buat gambar download
+                    valid_items = [it for it in hijab_items if it['photos']]
+                    if valid_items:
+                        n   = len(valid_items)
+                        fig, axes = plt.subplots(1, n, figsize=(5 * n, 5))
+                        if n == 1:
+                            axes = [axes]
+                        fig.patch.set_facecolor('#F7F5FF')
+                        for ax, item in zip(axes, valid_items):
+                            photo = random.choice(item['photos'])
                             ax.imshow(mpimg.imread(str(photo)))
-                        else:
-                            ax.text(0.5, 0.5, 'Tidak\nTersedia', ha='center', va='center',
-                                    fontsize=11, color='#AAAAAA', transform=ax.transAxes)
-                            ax.set_facecolor('#F0EEFF')
-                        ax.axis('off')
-                        is_rec_label = any(r.upper() in label.upper() for r in rec_hijab)
-                        ax.set_title(label, fontsize=10, pad=8,
-                                     color='#00B894' if is_rec_label else '#AAAAAA',
-                                     fontweight='bold' if is_rec_label else 'normal')
-                    plt.suptitle(f"Hijab — Wajah {face_shape}", fontsize=13,
-                                 fontweight='bold', color='#4A3B8B', y=1.02)
-                    plt.tight_layout()
-                    buf_h = io.BytesIO()
-                    plt.savefig(buf_h, format='png', dpi=150, bbox_inches='tight',
-                                facecolor=fig.get_facecolor())
-                    buf_h.seek(0)
-                    plt.close()
+                            ax.axis('off')
+                            suffix = " ✓" if item['is_rec'] else ""
+                            ax.set_title(
+                                f"{item['label']}{suffix}",
+                                fontsize=11, pad=8,
+                                color='#5B4FCF' if item['is_rec'] else '#AAAAAA',
+                                fontweight='bold' if item['is_rec'] else 'normal'
+                            )
+                        plt.suptitle(
+                            f"Top 3 Hijab — Wajah {face_shape}",
+                            fontsize=13, fontweight='bold', color='#4A3B8B', y=1.03
+                        )
+                        plt.tight_layout()
+                        buf_h = io.BytesIO()
+                        plt.savefig(buf_h, format='png', dpi=150, bbox_inches='tight',
+                                    facecolor=fig.get_facecolor())
+                        buf_h.seek(0)
+                        plt.close()
+                        st.download_button(
+                            "⬇️ Download Hasil",
+                            data=buf_h,
+                            file_name=f"facestyle_{face_shape}_hijab_top3.png",
+                            mime="image/png",
+                            use_container_width=True
+                        )
 
-                    st.download_button(
-                        "⬇️ Download Hasil",
-                        data=buf_h,
-                        file_name=f"facestyle_{face_shape}_{hijab_type}.png",
-                        mime="image/png",
-                        use_container_width=True
-                    )
                 with retry_col:
                     if st.button("🔄 Analisis Foto Lain",
                                  use_container_width=True, key="retry_hijab"):
