@@ -14,7 +14,7 @@ import io
 # SETTING
 # ============================================================
 MODEL_PATH = "best_faceshape_MobileNetV2_FINAL.keras"
-HAIR_PATH  = "Rambut_Labeled"
+HAIR_PATH  = "Rambut_Labeled_V2"   # ← folder baru hasil distribute_labeled.py
 HIJAB_PATH = "Hijab_Labeled"
 
 st.set_page_config(
@@ -48,14 +48,13 @@ html, body, [data-testid="stAppViewContainer"],
 }
 .main .block-container {
     padding: 0 0 4rem !important;
-    max-width: 860px !important;
+    max-width: 900px !important;
     margin: 0 auto !important;
 }
 
 h1,h2,h3,h4,h5,h6 { color: #1A1035 !important; }
 p, span, label, div { color: #2D2D2D; }
 
-/* ---- HERO ---- */
 .hero {
     background: linear-gradient(135deg, #5B4FCF 0%, #8B7FF5 60%, #B8AFFF 100%);
     padding: 3rem 2rem 2.5rem;
@@ -84,15 +83,7 @@ p, span, label, div { color: #2D2D2D; }
     color:#fff !important; margin:0 0 0.5rem;
     letter-spacing:-1px; line-height:1.1;
 }
-.hero-sub {
-    font-size:1rem; color:rgba(255,255,255,0.88) !important;
-    font-weight:400; max-width:500px;
-    margin:0 auto; line-height:1.65;
-    text-align:center !important;
-    display:block !important;
-}
 
-/* ---- STEP CARD ---- */
 .step-header {
     display:flex; align-items:center; gap:0.75rem;
     margin-bottom:1.2rem;
@@ -104,14 +95,9 @@ p, span, label, div { color: #2D2D2D; }
     display:flex; align-items:center; justify-content:center;
     flex-shrink:0; box-shadow:0 4px 12px rgba(91,79,207,0.3);
 }
-.step-title {
-    font-size:1.1rem; font-weight:800; color:#1A1035 !important;
-}
-.step-desc {
-    font-size:0.82rem; color:#8882B0 !important; margin-top:1px;
-}
+.step-title  { font-size:1.1rem; font-weight:800; color:#1A1035 !important; }
+.step-desc   { font-size:0.82rem; color:#8882B0 !important; margin-top:1px; }
 
-/* ---- CONTAINER OVERRIDE ---- */
 [data-testid="stVerticalBlockBorderWrapper"] {
     background:#FFFFFF !important;
     border:1px solid #E8E4FF !important;
@@ -124,7 +110,6 @@ p, span, label, div { color: #2D2D2D; }
     padding:0 !important; gap:0.8rem !important;
 }
 
-/* ---- RADIO PILL ---- */
 div[role="radiogroup"] {
     gap:8px !important; display:flex !important; flex-wrap:wrap !important;
 }
@@ -146,13 +131,10 @@ div[role="radiogroup"] label:has(input:checked) {
 }
 div[role="radiogroup"] label:has(input:checked) span,
 div[role="radiogroup"] label:has(input:checked) p,
-div[role="radiogroup"] label:has(input:checked) > div > p {
-    color:#fff !important;
-}
+div[role="radiogroup"] label:has(input:checked) > div > p { color:#fff !important; }
 div[role="radiogroup"] label input[type="radio"] { display:none !important; }
 div[role="radiogroup"] label > div:first-child   { display:none !important; }
 
-/* ---- SELECTBOX ---- */
 [data-testid="stSelectbox"] > label {
     color:#4A3B8B !important; font-weight:700 !important; font-size:0.85rem !important;
 }
@@ -165,17 +147,12 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     background:#fff !important; border:2px solid #D8D0F5 !important;
     border-radius:14px !important; box-shadow:0 12px 40px rgba(91,79,207,0.15) !important;
 }
-[data-baseweb="popover"] [role="option"] {
-    background:#fff !important; color:#2D2D2D !important;
-}
-[data-baseweb="popover"] [role="option"]:hover {
-    background:#F0EEFF !important; color:#4A3B8B !important;
-}
+[data-baseweb="popover"] [role="option"] { background:#fff !important; color:#2D2D2D !important; }
+[data-baseweb="popover"] [role="option"]:hover { background:#F0EEFF !important; color:#4A3B8B !important; }
 [data-baseweb="popover"] [aria-selected="true"] {
     background:#E8E4FF !important; color:#4A3B8B !important; font-weight:700 !important;
 }
 
-/* ---- FILE UPLOADER ---- */
 [data-testid="stFileUploader"]         { background:transparent !important; }
 [data-testid="stFileUploader"] section {
     background:#F7F5FF !important;
@@ -189,63 +166,28 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     font-weight:700 !important; padding:6px 20px !important;
 }
 
-/* ---- CAMERA ---- */
-[data-testid="stCameraInput"] {
-    background: transparent !important;
+[data-testid="stCameraInput"] { background: transparent !important; }
+[data-testid="stCameraInput"] > label { color: #4A3B8B !important; font-weight: 700 !important; }
+[data-testid="stCameraInput"] section, [data-testid="stCameraInput"] > div {
+    background: #F0EEFF !important; border: 2px solid #D8D0F5 !important;
+    border-radius: 20px !important; overflow: hidden !important; padding: 0 !important;
 }
-[data-testid="stCameraInput"] > label {
-    color: #4A3B8B !important;
-    font-weight: 700 !important;
-    font-size: 0.9rem !important;
-}
-[data-testid="stCameraInput"] section,
-[data-testid="stCameraInput"] > div {
-    background: #F0EEFF !important;
-    border: 2px solid #D8D0F5 !important;
-    border-radius: 20px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-}
-[data-testid="stCameraInput"] video {
-    border-radius: 18px !important;
-    width: 100% !important;
-    transform: scaleX(-1) !important;
-}
-[data-testid="stCameraInput"] img {
-    border-radius: 18px !important;
-    width: 100% !important;
-    transform: scaleX(-1) !important;
-}
-[data-testid="stCameraInput"] button,
-[data-testid="stCameraInput"] [data-testid="cameraCaptureButton"],
-[data-testid="stCameraInput"] [kind="secondary"] {
+[data-testid="stCameraInput"] video { border-radius:18px !important; width:100% !important; transform:scaleX(-1) !important; }
+[data-testid="stCameraInput"] img   { border-radius:18px !important; width:100% !important; transform:scaleX(-1) !important; }
+[data-testid="stCameraInput"] button {
     background: linear-gradient(135deg, #5B4FCF, #8B7FF5) !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    border-radius: 50px !important;
-    font-weight: 700 !important;
-    font-size: 0.9rem !important;
-    padding: 0.6rem 2rem !important;
-    width: 100% !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    box-shadow: 0 4px 16px rgba(91,79,207,0.3) !important;
-    margin-top: 0.5rem !important;
-}
-[data-testid="stCameraInput"] button:hover {
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(91,79,207,0.45) !important;
+    color: #FFFFFF !important; border: none !important; border-radius: 50px !important;
+    font-weight: 700 !important; width: 100% !important;
+    box-shadow: 0 4px 16px rgba(91,79,207,0.3) !important; margin-top: 0.5rem !important;
 }
 [data-testid="stCameraInput"] svg { display: none !important; }
 
-/* ---- CHECKBOX ---- */
 [data-testid="stCheckbox"] label,
 [data-testid="stCheckbox"] label span,
 [data-testid="stCheckbox"] label p {
     color:#2D2D2D !important; font-size:0.85rem !important; font-weight:500 !important;
 }
 
-/* ---- BUTTONS ---- */
 .stButton > button {
     background:linear-gradient(135deg,#5B4FCF 0%,#8B7FF5 100%) !important;
     color:#fff !important; border:none !important; border-radius:50px !important;
@@ -254,45 +196,25 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     transition:all 0.25s !important;
     box-shadow:0 4px 20px rgba(91,79,207,0.3) !important;
 }
-.stButton > button:hover {
-    transform:translateY(-2px) !important;
-    box-shadow:0 8px 30px rgba(91,79,207,0.45) !important;
-}
-.stButton > button:disabled {
-    background:#E0DCF8 !important; color:#B8AFFF !important;
-    box-shadow:none !important; transform:none !important;
-}
+.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:0 8px 30px rgba(91,79,207,0.45) !important; }
+.stButton > button:disabled { background:#E0DCF8 !important; color:#B8AFFF !important; box-shadow:none !important; }
 .stDownloadButton > button {
     background:linear-gradient(135deg,#00B894,#55EFC4) !important;
     color:#fff !important; border:none !important; border-radius:50px !important;
     font-weight:700 !important; width:100% !important;
     box-shadow:0 4px 16px rgba(0,184,148,0.25) !important;
 }
-.stDownloadButton > button:hover {
-    transform:translateY(-2px) !important;
-    box-shadow:0 8px 24px rgba(0,184,148,0.4) !important;
-}
+.stDownloadButton > button:hover { transform:translateY(-2px) !important; }
 
-/* ---- ALERTS ---- */
 .stInfo > div    { background:#F0EEFF !important; color:#4A3B8B !important; border-radius:14px !important; border:none !important; }
 .stSuccess > div { background:#EDFFF8 !important; color:#00695C !important; border-radius:14px !important; border:none !important; }
 .stError > div   { background:#FFF2F2 !important; border-radius:14px !important; border:none !important; }
 
-/* ---- PHOTO BADGES ---- */
 .photo-label { text-align:center; margin-top:0.6rem; }
 .label-name  { font-size:0.82rem; font-weight:700; color:#1A1035 !important; text-transform:uppercase; letter-spacing:0.6px; }
-.badge-rec {
-    display:inline-block;
-    background:linear-gradient(135deg,#00B894,#55EFC4);
-    color:#fff !important; font-size:0.68rem; font-weight:700;
-    padding:2px 10px; border-radius:20px; margin-top:4px;
-}
-.badge-no {
-    display:inline-block; background:#F0F0F0; color:#999 !important;
-    font-size:0.68rem; font-weight:600; padding:2px 10px; border-radius:20px; margin-top:4px;
-}
+.badge-rec { display:inline-block; background:linear-gradient(135deg,#00B894,#55EFC4); color:#fff !important; font-size:0.68rem; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:4px; }
+.badge-no  { display:inline-block; background:#F0F0F0; color:#999 !important; font-size:0.68rem; font-weight:600; padding:2px 10px; border-radius:20px; margin-top:4px; }
 
-/* ---- FACE BANNER ---- */
 .face-banner {
     background:linear-gradient(135deg,#5B4FCF 0%,#8B7FF5 100%);
     border-radius:18px; padding:1.3rem 1.8rem; margin-bottom:1.5rem;
@@ -306,37 +228,22 @@ div[role="radiogroup"] label > div:first-child   { display:none !important; }
     padding:0.4rem 1.1rem; color:#fff !important; font-weight:800; font-size:1rem;
 }
 
-/* ---- TIPS ---- */
 .tips-box {
     background:#F0EEFF; border-radius:16px;
     padding:1.1rem 1.4rem; border:1px solid #D8D0F5; margin-top:1rem;
 }
 .tips-box .t { font-weight:800; color:#4A3B8B !important; font-size:0.82rem; margin-bottom:0.4rem; }
-.tips-box ul  { margin:0; padding-left:1.2rem; }
-.tips-box li  { color:#5B4FCF !important; font-size:0.8rem; margin-bottom:2px; font-weight:500; }
+.tips-box ul { margin:0; padding-left:1.2rem; }
+.tips-box li { color:#5B4FCF !important; font-size:0.8rem; margin-bottom:2px; font-weight:500; }
 
-/* ---- HISTORY CHIPS ---- */
 .hist-chip {
     display:inline-block; background:#F0EEFF; border:1px solid #D8D0F5;
     border-radius:50px; padding:4px 14px; font-size:0.75rem; font-weight:600;
     color:#5B4FCF !important; margin:3px;
 }
-
-/* ---- EMPTY STATE ---- */
-.empty { text-align:center; padding:3rem 2rem; }
-.empty .ico { font-size:2.8rem; display:block; margin-bottom:0.8rem; }
-.empty p { color:#B8AFFF !important; font-size:0.92rem; line-height:1.7; }
-
-/* ---- DIVIDER ---- */
 .divider { height:1px; background:#EAE6FF; margin:1.2rem 0; }
-
-/* ---- FOOTER ---- */
-.footer {
-    text-align:center; padding:2rem 0 1rem;
-    border-top:1px solid #E8E4FF; margin-top:2rem;
-}
+.footer  { text-align:center; padding:2rem 0 1rem; border-top:1px solid #E8E4FF; margin-top:2rem; }
 .footer p { color:#B8AFFF !important; font-size:0.78rem; margin:0.2rem 0; }
-
 img { border-radius:12px !important; }
 </style>
 
@@ -345,30 +252,18 @@ img { border-radius:12px !important; }
     function fix(){
         document.querySelectorAll('[data-baseweb="popover"],[role="listbox"]').forEach(function(el){
             el.style.setProperty('background','#FFFFFF','important');
-            el.style.setProperty('border','2px solid #D8D0F5','important');
-            el.style.setProperty('border-radius','14px','important');
         });
         document.querySelectorAll('[role="option"]').forEach(function(el){
             el.style.setProperty('background','#FFFFFF','important');
             el.style.setProperty('color','#2D2D2D','important');
         });
-        document.querySelectorAll(
-            '[data-testid="stCameraInput"] button'
-        ).forEach(function(btn){
+        document.querySelectorAll('[data-testid="stCameraInput"] button').forEach(function(btn){
             btn.style.setProperty('background','linear-gradient(135deg,#5B4FCF,#8B7FF5)','important');
             btn.style.setProperty('color','#FFFFFF','important');
             btn.style.setProperty('border','none','important');
             btn.style.setProperty('border-radius','50px','important');
             btn.style.setProperty('font-weight','700','important');
-            btn.style.setProperty('padding','0.6rem 2rem','important');
             btn.style.setProperty('width','100%','important');
-            btn.style.setProperty('box-shadow','0 4px 16px rgba(91,79,207,0.3)','important');
-        });
-        document.querySelectorAll(
-            '[data-testid="stFileUploader"] section *:not(button)'
-        ).forEach(function(el){
-            el.style.setProperty('background','transparent','important');
-            el.style.setProperty('color','#7B6FD4','important');
         });
     }
     new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});
@@ -397,26 +292,39 @@ class_names  = ['Heart', 'Oblong', 'Oval', 'Round', 'Square']
 # ============================================================
 # DATA
 # ============================================================
-recommendation_rules = {
-    'Heart':  {'lurus': ['panjang'], 'gelombang': ['panjang', 'semi'], 'keriting': ['panjang', 'semi']},
-    'Oval':   {'lurus': ['panjang', 'semi', 'pendek'], 'gelombang': ['panjang', 'semi', 'pendek'], 'keriting': ['panjang', 'semi', 'pendek']},
-    'Round':  {'lurus': ['panjang'], 'gelombang': ['panjang', 'semi'], 'keriting': ['panjang']},
-    'Square': {'lurus': ['panjang', 'semi'], 'gelombang': ['semi', 'panjang'], 'keriting': ['semi']},
-    'Oblong': {'lurus': ['pendek', 'semi'], 'gelombang': ['pendek', 'semi'], 'keriting': ['pendek', 'semi']},
-}
-hijab_rules = {
-    'Oval':   ['segi_empat', 'pashmina', 'instant'],
-    'Round':  ['pashmina', 'segi_empat'],
-    'Square': ['pashmina', 'instant'],
-    'Oblong': ['segi_empat', 'instant'],
-    'Heart':  ['segi_empat', 'pashmina'],
-}
 face_shape_desc = {
     'Heart':  'Dahi lebar, dagu lancip',
     'Oval':   'Proporsional dan seimbang',
     'Round':  'Lebar dan panjang hampir sama',
     'Square': 'Rahang tegas dan lebar',
     'Oblong': 'Panjang melebihi lebar',
+}
+
+# Panjang yang direkomendasikan per bentuk wajah
+length_rules = {
+    'Heart':  ['panjang'],
+    'Oval':   ['panjang', 'semi', 'pendek'],
+    'Round':  ['panjang', 'semi'],
+    'Square': ['panjang', 'semi'],
+    'Oblong': ['pendek', 'semi'],
+}
+
+# Label tampilan nama style
+style_labels = {
+    'curly':    'Curly',
+    'layer':    'Layer',
+    'straight': 'Straight',
+    'wavy':     'Wavy',
+    'wolfcut':  'Wolf Cut',
+}
+
+# Hijab
+hijab_rules = {
+    'Oval':   ['segi_empat', 'pashmina', 'instant'],
+    'Round':  ['pashmina', 'segi_empat'],
+    'Square': ['pashmina', 'instant'],
+    'Oblong': ['segi_empat', 'instant'],
+    'Heart':  ['segi_empat', 'pashmina'],
 }
 hijab_labels = {'instant': 'Instant', 'pashmina': 'Pashmina', 'segi_empat': 'Segi Empat'}
 
@@ -438,49 +346,107 @@ def detect_face_shape(image_array: np.ndarray):
     face    = cv2.resize(img[y1:y2, x1:x2], (224, 224))
     face    = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
 
-    # ✅ FIX: Gunakan float32 tanpa preprocess_input
-    # (sama persis dengan kode Colab agar konsisten dengan cara model dilatih)
+    # ✅ float32 tanpa preprocess_input — konsisten dengan cara model dilatih
     face_arr = np.array(face, dtype=np.float32)
-    # BARIS INI DIHAPUS — inilah penyebab bug "selalu Oblong":
-    # face_arr = tf.keras.applications.mobilenet_v2.preprocess_input(face_arr)
-
     tensor   = tf.expand_dims(face_arr, 0)
     preds    = model.predict(tensor, verbose=0)
     return class_names[int(np.argmax(preds))], float(np.max(preds))
+
 
 def get_photos(folder_path):
     p = Path(folder_path)
     if not p.exists():
         return []
-    return list(p.glob('*.jpg')) + list(p.glob('*.jpeg')) + list(p.glob('*.png'))
+    return (
+        list(p.glob('*.jpg')) +
+        list(p.glob('*.jpeg')) +
+        list(p.glob('*.png'))
+    )
+
+
+def get_top3_styles(face_shape: str):
+    """
+    Scan semua folder {face_shape}_{length}_{style} di HAIR_PATH.
+    Kembalikan 3 folder terbaik berdasarkan:
+      1. Panjang termasuk dalam length_rules (prioritas utama)
+      2. Jumlah foto terbanyak (tiebreaker)
+
+    Struktur folder baru: Oval_panjang_layer, Round_semi_wavy, dst.
+    Format: {Shape}_{length}_{style}
+    """
+    base     = Path(HAIR_PATH)
+    rec_lens = length_rules.get(face_shape, [])
+    candidates = []
+
+    if not base.exists():
+        return []
+
+    for folder in base.iterdir():
+        if not folder.is_dir():
+            continue
+
+        # Nama folder: Shape_length_style  → split maxsplit=2
+        parts = folder.name.split('_', 2)
+        if len(parts) != 3:
+            continue
+
+        shape, length, style = parts
+        if shape != face_shape:
+            continue
+
+        photos = get_photos(folder)
+        if not photos:
+            continue
+
+        candidates.append({
+            'folder':      folder,
+            'length':      length,
+            'style':       style,
+            'photos':      photos,
+            'is_rec':      length in rec_lens,
+            'photo_count': len(photos),
+        })
+
+    # Recommended dulu, lalu jumlah foto terbanyak
+    candidates.sort(key=lambda x: (not x['is_rec'], -x['photo_count']))
+    return candidates[:3]
+
 
 def save_to_database(image_array, face_shape, sub_type, mode):
     ts = int(time.time())
-    if mode == 'rambut':
-        length, hair_type = sub_type
-        folder = Path(HAIR_PATH) / f"{face_shape}_{length}_{hair_type}"
-    else:
+    if mode == 'hijab':
         folder = Path(HIJAB_PATH) / f"{face_shape}_{sub_type}"
+    else:
+        top3 = get_top3_styles(face_shape)
+        folder = top3[0]['folder'] if top3 else Path(HAIR_PATH) / f"{face_shape}_misc"
     folder.mkdir(parents=True, exist_ok=True)
     bgr = cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
     cv2.imwrite(str(folder / f"user_{ts}.jpg"), bgr)
 
-def create_result_image(photos, labels, recommended_list, title):
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+def create_result_image_top3(top3_items, face_shape):
+    n    = len(top3_items)
+    fig, axes = plt.subplots(1, n, figsize=(5 * n, 5))
+    if n == 1:
+        axes = [axes]
     fig.patch.set_facecolor('#F7F5FF')
-    for ax, photo, label in zip(axes, photos, labels):
-        if photo:
-            ax.imshow(mpimg.imread(str(photo)))
-        else:
-            ax.text(0.5, 0.5, 'Tidak\nTersedia', ha='center', va='center',
-                    fontsize=11, color='#AAAAAA', transform=ax.transAxes)
-            ax.set_facecolor('#F0EEFF')
+
+    for i, (ax, item) in enumerate(zip(axes, top3_items)):
+        photo = random.choice(item['photos'])
+        ax.imshow(mpimg.imread(str(photo)))
         ax.axis('off')
-        is_rec = any(r.upper() in label.upper() for r in recommended_list)
-        ax.set_title(label, fontsize=10, pad=8,
-                     color='#00B894' if is_rec else '#AAAAAA',
-                     fontweight='bold' if is_rec else 'normal')
-    plt.suptitle(title, fontsize=13, fontweight='bold', color='#4A3B8B', y=1.02)
+        style_txt = style_labels.get(item['style'], item['style'])
+        len_txt   = item['length'].capitalize()
+        color     = '#5B4FCF' if item['is_rec'] else '#AAAAAA'
+        ax.set_title(
+            f"#{i+1}  {style_txt}\n{len_txt}",
+            fontsize=11, pad=8, color=color, fontweight='bold'
+        )
+
+    plt.suptitle(
+        f"Top 3 Rekomendasi Rambut — Wajah {face_shape}",
+        fontsize=13, fontweight='bold', color='#4A3B8B', y=1.03
+    )
     plt.tight_layout()
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=150, bbox_inches='tight',
@@ -513,44 +479,29 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ============================================================
-# STEP 1 — PREFERENSI
+# STEP 1 — MODE
 # ============================================================
 with st.container(border=True):
     st.markdown("""
     <div class="step-header">
         <div class="step-num">1</div>
         <div>
-            <div class="step-title">Pilih Mode &amp; Preferensi</div>
-            <div class="step-desc">Pilih apakah kamu ingin rekomendasi rambut atau hijab</div>
+            <div class="step-title">Pilih Mode</div>
+            <div class="step-desc">Pilih rekomendasi rambut atau hijab</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    c1, c2, c3 = st.columns(3)
+    mode = st.radio("mode", ["Rambut", "Hijab"],
+                    horizontal=True, label_visibility="collapsed")
 
-    with c1:
-        st.markdown("**Mode Rekomendasi**")
-        mode = st.radio("mode", ["Rambut", "Hijab"],
-                        horizontal=False, label_visibility="collapsed")
-
-    with c2:
-        if mode == "Rambut":
-            st.markdown("**Jenis Rambut**")
-            hair_type = st.selectbox("jenis", ["lurus", "gelombang", "keriting"],
-                                     label_visibility="collapsed")
-        else:
-            st.markdown("**Jenis Hijab**")
-            hijab_type = st.selectbox("jenis", ["instant", "pashmina", "segi_empat"],
-                                      label_visibility="collapsed",
-                                      format_func=lambda x: hijab_labels.get(x, x))
-
-    with c3:
-        if mode == "Rambut":
-            st.markdown("**Panjang Rambut Saat Ini**")
-            length_user = st.selectbox("panjang", ["pendek", "semi", "panjang"],
-                                       label_visibility="collapsed")
-        else:
-            st.markdown(" ")
+    if mode == "Hijab":
+        st.markdown("**Jenis Hijab yang kamu pakai saat ini**")
+        hijab_type = st.selectbox(
+            "jenis_hijab", ["instant", "pashmina", "segi_empat"],
+            label_visibility="collapsed",
+            format_func=lambda x: hijab_labels.get(x, x)
+        )
 
     st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
     consent = st.checkbox(
@@ -574,17 +525,15 @@ with st.container(border=True):
     input_method = st.radio(
         "input_method",
         ["Upload dari Galeri", "Selfie dengan Kamera"],
-        horizontal=True,
-        label_visibility="collapsed"
+        horizontal=True, label_visibility="collapsed"
     )
 
     image_array = None
 
     if input_method == "Upload dari Galeri":
         uploaded = st.file_uploader(
-            "Pilih foto wajah yang jelas (format JPG atau PNG)",
-            type=['jpg', 'jpeg', 'png'],
-            label_visibility="visible"
+            "Pilih foto wajah yang jelas (JPG / PNG)",
+            type=['jpg', 'jpeg', 'png'], label_visibility="visible"
         )
         if uploaded:
             pil_img     = Image.open(uploaded).convert('RGB')
@@ -595,16 +544,11 @@ with st.container(border=True):
         <div style='background:#F0EEFF;border-radius:14px;padding:0.8rem 1rem;
                     border:1px solid #D8D0F5;margin-bottom:0.8rem'>
             <p style='color:#5B4FCF !important;font-size:0.82rem;font-weight:600;margin:0'>
-                Panduan selfie yang baik: Hadap kamera langsung, pastikan wajah terlihat jelas,
-                dan gunakan pencahayaan yang cukup.
+                Hadap kamera langsung, pastikan wajah jelas, pencahayaan cukup.
             </p>
         </div>
         """, unsafe_allow_html=True)
-
-        cam = st.camera_input(
-            "Tekan tombol di bawah untuk mengambil foto",
-            label_visibility="visible"
-        )
+        cam = st.camera_input("Tekan tombol untuk mengambil foto", label_visibility="visible")
         if cam:
             pil_img     = Image.open(cam).convert('RGB')
             pil_img     = ImageOps.mirror(pil_img)
@@ -628,10 +572,10 @@ with st.container(border=True):
     <div class="tips-box">
         <div class="t">Tips untuk hasil terbaik</div>
         <ul>
-            <li>Pastikan wajah terlihat jelas dan tidak tertutup</li>
-            <li>Gunakan pencahayaan yang cukup dan merata</li>
-            <li>Hadap kamera secara langsung (lurus)</li>
-            <li>Hindari penggunaan kacamata atau topi</li>
+            <li>Wajah terlihat jelas dan tidak tertutup</li>
+            <li>Pencahayaan cukup dan merata</li>
+            <li>Hadap kamera secara langsung</li>
+            <li>Hindari kacamata atau topi</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -647,7 +591,7 @@ if st.session_state.show_result and st.session_state.image_array is not None:
             <div class="step-num">3</div>
             <div>
                 <div class="step-title">Hasil Analisis &amp; Rekomendasi</div>
-                <div class="step-desc">Berikut adalah hasil deteksi bentuk wajah dan rekomendasinya</div>
+                <div class="step-desc">Top 3 gaya terbaik untuk bentuk wajahmu</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -657,14 +601,16 @@ if st.session_state.show_result and st.session_state.image_array is not None:
 
         if face_shape is None:
             st.error(
-                "Wajah tidak terdeteksi. Coba ulangi dengan foto yang lebih jelas, "
-                "wajah menghadap kamera secara langsung, dan pastikan pencahayaan cukup."
+                "Wajah tidak terdeteksi. Coba foto lebih jelas, "
+                "menghadap kamera langsung, dengan pencahayaan cukup."
             )
             if st.button("Coba Foto Lain", use_container_width=True):
                 st.session_state.show_result = False
                 st.session_state.image_array = None
                 st.rerun()
+
         else:
+            # Banner bentuk wajah
             st.markdown(f"""
             <div class="face-banner">
                 <div>
@@ -675,80 +621,92 @@ if st.session_state.show_result and st.session_state.image_array is not None:
             </div>
             """, unsafe_allow_html=True)
 
-            # ---- RAMBUT ----
+            # ==================================================
+            # MODE RAMBUT — Top 3 kartu
+            # ==================================================
             if mode == "Rambut":
-                rec_lengths = recommendation_rules[face_shape][hair_type]
-                all_lengths = ['pendek', 'semi', 'panjang']
+                top3 = get_top3_styles(face_shape)
 
-                st.info(
-                    f"Jenis rambut: **{hair_type.capitalize()}**  |  "
-                    f"Panjang saat ini: **{length_user.capitalize()}**  |  "
-                    f"Cocok untuk: **{', '.join(rec_lengths)}**"
-                )
+                if not top3:
+                    st.warning("Belum ada foto referensi untuk bentuk wajah ini.")
+                else:
+                    rec_lens = length_rules.get(face_shape, [])
+                    st.info(
+                        f"Bentuk wajah **{face_shape}** cocok dengan panjang rambut: "
+                        f"**{', '.join(rec_lens)}**"
+                    )
 
-                cols3 = st.columns(3)
-                photos_shown, labels_shown = [], []
+                    st.markdown(
+                        "<p style='font-size:0.85rem;font-weight:700;"
+                        "color:#8882B0;margin:0.2rem 0 0.8rem'>🏆 Top 3 Gaya Rambut Untukmu</p>",
+                        unsafe_allow_html=True
+                    )
 
-                for col, length in zip(cols3, all_lengths):
-                    folder = Path(HAIR_PATH) / f"{face_shape}_{length}_{hair_type}"
-                    photos = get_photos(folder)
-                    is_rec = length in rec_lengths
+                    cols = st.columns(3)
+                    rank_colors = ["#5B4FCF", "#8B7FF5", "#B8AFFF"]
 
-                    with col:
-                        if photos:
-                            photo = random.choice(photos)
+                    for i, (col, item) in enumerate(zip(cols, top3)):
+                        photo      = random.choice(item['photos'])
+                        style_name = style_labels.get(item['style'], item['style'])
+                        length_cap = item['length'].capitalize()
+                        rec_tag    = (
+                            "<span style='display:inline-block;"
+                            "background:linear-gradient(135deg,#00B894,#55EFC4);"
+                            "color:#fff;font-size:0.65rem;font-weight:700;"
+                            "padding:2px 9px;border-radius:20px;margin-top:5px'>"
+                            "✓ Direkomendasikan</span>"
+                        ) if item['is_rec'] else ""
+
+                        with col:
                             st.image(Image.open(str(photo)), use_column_width=True)
-                            photos_shown.append(photo)
-                        else:
-                            st.markdown(
-                                "<div style='background:#F0EEFF;border-radius:12px;"
-                                "height:150px;display:flex;align-items:center;"
-                                "justify-content:center'><p style='color:#B8AFFF;"
-                                "font-size:0.78rem;text-align:center;margin:0'>"
-                                "Foto belum<br>tersedia</p></div>",
-                                unsafe_allow_html=True
-                            )
-                            photos_shown.append(None)
+                            st.markdown(f"""
+                            <div style='text-align:center;padding:0.5rem 0 0.8rem'>
+                                <span style='display:inline-block;
+                                    background:{rank_colors[i]};color:#fff;
+                                    font-size:0.7rem;font-weight:800;
+                                    padding:2px 12px;border-radius:20px;
+                                    margin-bottom:6px'>#{i+1}</span><br>
+                                <span style='font-size:1rem;font-weight:800;
+                                    color:#1A1035'>{style_name}</span><br>
+                                <span style='display:inline-block;
+                                    background:#F0EEFF;color:#5B4FCF;
+                                    font-size:0.7rem;font-weight:700;
+                                    padding:2px 11px;border-radius:20px;
+                                    margin-top:4px'>{length_cap}</span>
+                                {rec_tag}<br>
+                                <span style='font-size:0.68rem;color:#B8AFFF;
+                                    margin-top:4px;display:inline-block'>
+                                    {item['photo_count']} referensi
+                                </span>
+                            </div>
+                            """, unsafe_allow_html=True)
 
-                        badge     = "badge-rec" if is_rec else "badge-no"
-                        badge_txt = "Direkomendasikan" if is_rec else "Kurang cocok"
-                        st.markdown(f"""
-                        <div class='photo-label'>
-                            <span class='label-name'>{length.capitalize()}</span><br>
-                            <span class='{badge}'>{badge_txt}</span>
-                        </div>""", unsafe_allow_html=True)
-                        labels_shown.append(f"{length.upper()} - {badge_txt}")
+                    st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
+                    dl_col, retry_col = st.columns(2)
 
-                st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
-                dl_col, retry_col = st.columns(2)
+                    with dl_col:
+                        buf = create_result_image_top3(top3, face_shape)
+                        st.download_button(
+                            "⬇️ Download Hasil",
+                            data=buf,
+                            file_name=f"facestyle_{face_shape}_top3.png",
+                            mime="image/png",
+                            use_container_width=True
+                        )
+                    with retry_col:
+                        if st.button("🔄 Analisis Foto Lain", use_container_width=True):
+                            st.session_state.show_result = False
+                            st.session_state.image_array = None
+                            st.rerun()
 
-                with dl_col:
-                    buf = create_result_image(
-                        photos_shown, labels_shown, rec_lengths,
-                        f"Rambut {hair_type.capitalize()} - Wajah {face_shape}"
-                    )
-                    st.download_button(
-                        "Download Hasil",
-                        data=buf,
-                        file_name=f"facestyle_{face_shape}_{hair_type}.png",
-                        mime="image/png",
-                        use_container_width=True
-                    )
-                with retry_col:
-                    if st.button("Analisis Foto Lain", use_container_width=True):
-                        st.session_state.show_result = False
-                        st.session_state.image_array = None
-                        st.rerun()
+                    st.session_state.history.append(f"Rambut {face_shape}")
+                    if consent:
+                        save_to_database(st.session_state.image_array, face_shape, None, 'rambut')
+                        st.success("Foto berhasil disimpan. Terima kasih atas kontribusinya!")
 
-                st.session_state.history.append(f"Rambut {hair_type} - {face_shape}")
-                if consent:
-                    save_to_database(
-                        st.session_state.image_array,
-                        face_shape, (length_user, hair_type), 'rambut'
-                    )
-                    st.success("Foto berhasil disimpan. Terima kasih atas kontribusinya!")
-
-            # ---- HIJAB ----
+            # ==================================================
+            # MODE HIJAB
+            # ==================================================
             else:
                 rec_hijab = hijab_rules[face_shape]
                 all_hijab = ['instant', 'pashmina', 'segi_empat']
@@ -795,43 +753,64 @@ if st.session_state.show_result and st.session_state.image_array is not None:
                 dl_col, retry_col = st.columns(2)
 
                 with dl_col:
-                    buf = create_result_image(
-                        photos_shown, labels_shown, rec_hijab,
-                        f"Hijab - Wajah {face_shape}"
-                    )
+                    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+                    fig.patch.set_facecolor('#F7F5FF')
+                    for ax, photo, label in zip(axes, photos_shown, labels_shown):
+                        if photo:
+                            ax.imshow(mpimg.imread(str(photo)))
+                        else:
+                            ax.text(0.5, 0.5, 'Tidak\nTersedia', ha='center', va='center',
+                                    fontsize=11, color='#AAAAAA', transform=ax.transAxes)
+                            ax.set_facecolor('#F0EEFF')
+                        ax.axis('off')
+                        is_rec_label = any(r.upper() in label.upper() for r in rec_hijab)
+                        ax.set_title(label, fontsize=10, pad=8,
+                                     color='#00B894' if is_rec_label else '#AAAAAA',
+                                     fontweight='bold' if is_rec_label else 'normal')
+                    plt.suptitle(f"Hijab — Wajah {face_shape}", fontsize=13,
+                                 fontweight='bold', color='#4A3B8B', y=1.02)
+                    plt.tight_layout()
+                    buf_h = io.BytesIO()
+                    plt.savefig(buf_h, format='png', dpi=150, bbox_inches='tight',
+                                facecolor=fig.get_facecolor())
+                    buf_h.seek(0)
+                    plt.close()
+
                     st.download_button(
-                        "Download Hasil",
-                        data=buf,
+                        "⬇️ Download Hasil",
+                        data=buf_h,
                         file_name=f"facestyle_{face_shape}_{hijab_type}.png",
                         mime="image/png",
                         use_container_width=True
                     )
                 with retry_col:
-                    if st.button("Analisis Foto Lain",
+                    if st.button("🔄 Analisis Foto Lain",
                                  use_container_width=True, key="retry_hijab"):
                         st.session_state.show_result = False
                         st.session_state.image_array = None
                         st.rerun()
 
                 st.session_state.history.append(
-                    f"Hijab {hijab_labels.get(hijab_type, hijab_type)} - {face_shape}"
+                    f"Hijab {hijab_labels.get(hijab_type, hijab_type)} — {face_shape}"
                 )
                 if consent:
                     save_to_database(
-                        st.session_state.image_array,
-                        face_shape, hijab_type, 'hijab'
+                        st.session_state.image_array, face_shape, hijab_type, 'hijab'
                     )
                     st.success("Foto berhasil disimpan. Terima kasih atas kontribusinya!")
 
-        # Riwayat
-        if st.session_state.history:
-            st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-            st.markdown("<p style='font-size:0.8rem;font-weight:700;color:#8882B0'>Riwayat Analisis</p>", unsafe_allow_html=True)
-            chips = "".join([
-                f"<span class='hist-chip'>{h}</span>"
-                for h in reversed(st.session_state.history[-5:])
-            ])
-            st.markdown(chips, unsafe_allow_html=True)
+            # Riwayat
+            if st.session_state.history:
+                st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+                st.markdown(
+                    "<p style='font-size:0.8rem;font-weight:700;color:#8882B0'>"
+                    "Riwayat Analisis</p>", unsafe_allow_html=True
+                )
+                chips = "".join([
+                    f"<span class='hist-chip'>{h}</span>"
+                    for h in reversed(st.session_state.history[-5:])
+                ])
+                st.markdown(chips, unsafe_allow_html=True)
 
 # ============================================================
 # FOOTER
